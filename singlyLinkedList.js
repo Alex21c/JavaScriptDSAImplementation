@@ -14,11 +14,11 @@ class SinglyLinkedList{
   /// add new node to the end of the list //
   push(val){    
       let newNode = new Node(val);
-      // is there head present?
+      // there is no node
       if(this.length===0){
         this.head=newNode;
-        this.tail=newNode;
-      }else{
+        this.tail=this.head;
+      }else{//there is head node present
         this.tail.next=newNode;
         this.tail=newNode;
         // console.log(newNode);
@@ -118,11 +118,71 @@ class SinglyLinkedList{
         ++this.length;
       }
     return true;
-
-
   }
   
-}
+  /// Removes the node from the index specified //
+  remove(idx){
+    // Safeguard
+      if(idx<0 || idx>=this.length){
+        return false;
+      }
+    // Removing      
+      if(idx===0){// removing head node        
+        return this.shift();
+      }else if(idx === this.length-1){
+        return this.pop();
+      }else{
+        // get index of previous and next nodes
+        let previousNode = this.get(idx-1);
+        let nextNode = this.get(idx+1);
+        if(previousNode && nextNode){
+          previousNode.next=nextNode;
+          this.length--;
+          return this; // return the entire list after node removal
+        }
+      }
+  }
+  
+  /// Reverse the entire Linked List //
+  reverse(){
+    // making head tail and tail as head
+      let tempNode = this.head;
+      this.head=this.tail;
+      this.tail = tempNode;     
+
+    let currentNode, previousNode, nextNode;    
+    currentNode=this.tail;    
+    previousNode=null;
+    nextNode=currentNode.next;
+    let bkNode;
+    
+    while(nextNode){
+      // console.log(previousNode);
+      // console.log(currentNode);
+      // console.log(nextNode);
+      // console.log("---");
+      bkNode=nextNode.next;
+      nextNode.next = currentNode;
+      currentNode.next = previousNode;
+      previousNode=currentNode;
+      currentNode=nextNode;
+      nextNode=bkNode;
+    }
+    return this;
+  }  
+
+  /// Print all elements present inside list //
+  print(){
+    let current=this.head;
+    let output=[];
+    while(current){
+      output.push(current.val);
+      current=current.next;
+    }
+    return output;
+  }
+  
+} 
 
 
 let mySinglyLinkedList = new SinglyLinkedList();
@@ -130,9 +190,9 @@ mySinglyLinkedList.push("Node1");
 mySinglyLinkedList.push("Node2");
 mySinglyLinkedList.push("Node3");
 mySinglyLinkedList.push("Node4");
-
+mySinglyLinkedList.push("Node5");
 // mySinglyLinkedList.unshift("Node*");
-
+ 
 // console.log(mySinglyLinkedList);
 // mySinglyLinkedList.pop();
 // console.log(mySinglyLinkedList);
