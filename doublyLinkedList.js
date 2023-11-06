@@ -15,6 +15,70 @@ class DoublyLinkedList{
       this.tail=null;  
   }
 /***
+ * Removes the node iff present at the index provided
+ */
+  remove(idx){
+    if(idx===0){
+      // remove from the beginning
+        return this.shift();
+    }else if(idx=== this.length-1){
+      // remove from the end
+        return this.pop();
+    }else if(idx>0 && idx<this.length){
+      // remove from the middle
+        let nodeToRemove = this.get(idx);
+        let previousNode = nodeToRemove.previous;
+        let nextNode = nodeToRemove.next;
+        previousNode.newNode = nextNode;
+        nextNode.previous=previousNode;
+        --this.length;
+        return this;
+    }else if(idx<0 || idx>=this.length){
+      // out of range
+        return false;
+    }
+  }  
+/***
+ * Insert new with at index provided
+ */
+  insert(idx, val){
+    if(idx === 0){
+      // insert at the beginning
+        return this.unshift(val);
+    }else if(idx === this.length){
+      // insert at the end
+        return this.push(val);
+    }else if(idx>0 && idx<this.length){
+      // insert in the middle
+        let nextNode = this.get(idx);
+        let previousNode = nextNode.previous;
+        let newNode = new Node(val);   
+        // linking newNode with next node     
+          newNode.next = nextNode;
+          nextNode.previous = newNode;
+        // linking new node with previous node
+          newNode.previous= previousNode;
+          previousNode.next= newNode;        
+        this.length++;
+        return this;
+    }else if(idx<0 || idx>this.length){
+      // out of range
+        return false;
+    }
+  }
+/***
+ * Update the node with new val provided iff present at the index provided
+ */
+  set(idx, val){
+    let nodeAtGivenIdx = this.get(idx);
+    if(nodeAtGivenIdx === false){
+      return false;
+    }else{
+      nodeAtGivenIdx.val = val;
+      return this;
+    }
+  }      
+/***
  * Get the node iff present at the index provided
  */
   get(idx){
@@ -25,7 +89,7 @@ class DoublyLinkedList{
     let counter, currentNode;
     // Case #1 index is closer to head node
       if(idx< Math.floor(this.length/2)){
-        console.log("Near Head");
+        //console.log("Near Head");
         counter=0; currentNode=this.head;
         while(counter !== idx){
           ++counter;
@@ -35,7 +99,7 @@ class DoublyLinkedList{
       }
       // Case #2 index is closer to tail node
       else{
-        console.log("Near Tail");
+        //console.log("Near Tail");
         counter=this.length-1; currentNode=this.tail;
         while(counter !== idx){
           --counter;
@@ -133,7 +197,7 @@ class DoublyLinkedList{
         newNode.next = null;      
         this.tail.next = newNode;
         this.tail = newNode;
-        ++this.length;
+        ++this.length; 
         return this;
       }
     // Step #2 Case #2 It does not have any nodes
@@ -148,17 +212,12 @@ class DoublyLinkedList{
 } 
 
 let myDoublyLinkedList = new DoublyLinkedList();
+myDoublyLinkedList.push(2);
+myDoublyLinkedList.push(4);
 myDoublyLinkedList.push(5);
-myDoublyLinkedList.push(10);
-myDoublyLinkedList.push(15);
-myDoublyLinkedList.push(20);
-myDoublyLinkedList.push(25);
-myDoublyLinkedList.push(30);
-myDoublyLinkedList.push(35);
-myDoublyLinkedList.push(40);
-myDoublyLinkedList.push(55);
-myDoublyLinkedList.push(50);
-myDoublyLinkedList.push(55);
-myDoublyLinkedList.push(60);
+myDoublyLinkedList.push(7);
+myDoublyLinkedList.push(8);
+
+
 
 console.log(myDoublyLinkedList);
