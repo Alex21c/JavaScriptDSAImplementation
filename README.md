@@ -1,2 +1,3 @@
 # JavaScriptDSAImplementation
-JavaScript DSA Implementation
+![](https://github.com/Alex21c/JavaScriptDSAImplementation/blob/main/posterJavaScriptDSAImplementation.png)
+
