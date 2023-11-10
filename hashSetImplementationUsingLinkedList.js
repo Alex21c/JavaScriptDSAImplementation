@@ -109,6 +109,10 @@ class MyHashSet{
     this.hTable = new Array(this.size);        
   }
   hash(key){
+    // what modulus operator does
+    // 68 % 11 =2 , then i will get value from 0 to 10
+    // 999 % 11 = 9    
+    // in our case its 997 so i get value from 0 to 996 as index
     return key%this.size;
   }
   add(key){        
