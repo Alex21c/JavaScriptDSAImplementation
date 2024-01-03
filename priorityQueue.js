@@ -13,6 +13,25 @@ class priorityQueue{
   constructor(){
     this.values = [];
   }
+  // decrease priority by One
+  decreasePriorityByOne(value){
+    if(this.values.length > 0){
+      let idx = 0;
+      for(let node of this.values){
+        if(node.value === value){
+          let newPriority = node.priority-1;
+          let value = node.value;
+          // removing node
+            this.dequeue(node.value);
+          // adding node
+            this.enqueue(value, newPriority);
+          return newPriority;
+        }
+        ++idx;
+      }
+    }
+  }
+
   // Check whether an element is present in PQ or not
   has(value){
     if(this.values.length > 0){
@@ -33,8 +52,13 @@ class priorityQueue{
     return `${value}=> ${priority}`;
   }
   // helper function of enqueue, moves the newly added element to its correct position from last index
-    bubbleUp(){
-      let idx = this.values.length-1;
+    bubbleUp(customIdx=null){
+      let idx;
+      if(customIdx === null){
+        idx= this.values.length-1;
+      }else{
+        idx= customIdx;
+      } 
       let element = this.values.at(idx);    
       while(idx>0){
         let parentIdx = Math.floor((idx-1)/2);
@@ -125,3 +149,5 @@ console.log(pq);
 // console.log(pq);
 
 console.log(`\n\n has ${pq.has('a')}`);
+console.log(`\n\n decreasePriority ${pq.decreasePriorityByOne('a')}`);
+console.log(pq);
