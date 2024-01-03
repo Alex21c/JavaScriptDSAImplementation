@@ -1,5 +1,3 @@
-// Q.7 Array Sum: Write an algorithm to find the pair of elements in an array that adds up to a specific target sum.
-
 
 
 ////// IMPLEMENTED PRIORITY QUEUE /////
@@ -12,7 +10,12 @@ class Node{
 class priorityQueue{
   constructor(){
     this.values = [];
+    this.length = 0;
   }
+  fetchMaxAndDecreasePriorityByOne(){
+
+  }
+
   // decrease priority by One
   decreasePriorityByOne(value){
     if(this.values.length > 0){
@@ -47,6 +50,7 @@ class priorityQueue{
   // Add new element
   enqueue(value, priority){
     let newNode = new Node(value, priority);
+    this.length++;
     this.values.push(newNode);
     this.bubbleUp();    
     return `${value}=> ${priority}`;
@@ -78,6 +82,7 @@ class priorityQueue{
     // removing from heap
       let max = this.values[0];
       let end = this.values.pop();      
+      this.length--;
       // have the new root sinkDown to the correct spot
       if(this.values.length > 0){
         this.values[0] = end;
@@ -139,15 +144,16 @@ console.log(pq);
 console.log(`Adding ${pq.enqueue('d', 2)}`);
 console.log(pq);
 
-// console.log(`\n\nRemoving ${pq.dequeue()}`);
-// console.log(pq);
-// console.log(`Removing ${pq.dequeue()}`);
-// console.log(pq);
-// console.log(`Removing ${pq.dequeue()}`);
-// console.log(pq);
-// console.log(`Removing ${pq.dequeue()}`);
+// // console.log(`\n\nRemoving ${pq.dequeue()}`);
+// // console.log(pq);
+// // console.log(`Removing ${pq.dequeue()}`);
+// // console.log(pq);
+// // console.log(`Removing ${pq.dequeue()}`);
+// // console.log(pq);
+// // console.log(`Removing ${pq.dequeue()}`);
+// // console.log(pq);
+
+// console.log(`\n\n has ${pq.has('a')}`);
+// console.log(`\n\n decreasePriority ${pq.decreasePriorityByOne('a')}`);
 // console.log(pq);
 
-console.log(`\n\n has ${pq.has('a')}`);
-console.log(`\n\n decreasePriority ${pq.decreasePriorityByOne('a')}`);
-console.log(pq);
