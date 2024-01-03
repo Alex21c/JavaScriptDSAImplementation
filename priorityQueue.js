@@ -13,7 +13,16 @@ class priorityQueue{
     this.length = 0;
   }
   fetchMaxAndDecreasePriorityByOne(){
-
+    if(this.length <=0 ){
+      console.log('this.length < = 0');
+      return;
+    }
+    let node = this.values[0];
+    let value = node.value;
+    this.decreasePriorityByOne(value);
+    return value;
+    
+    
   }
 
   // decrease priority by One
@@ -27,7 +36,9 @@ class priorityQueue{
           // removing node
             this.dequeue(node.value);
           // adding node
-            this.enqueue(value, newPriority);
+            if(newPriority>0){
+              this.enqueue(value, newPriority);
+            }
           return newPriority;
         }
         ++idx;
@@ -134,26 +145,32 @@ class priorityQueue{
     }
 }
 
-let pq = new priorityQueue();
-console.log(`Adding ${pq.enqueue('a', 2)}`);
-console.log(pq);
-console.log(`Adding ${pq.enqueue('b', 1)}`);
-console.log(pq);
-console.log(`Adding ${pq.enqueue('c', 1)}`);
-console.log(pq);
-console.log(`Adding ${pq.enqueue('d', 2)}`);
-console.log(pq);
+// let pq = new priorityQueue();
 
-// // console.log(`\n\nRemoving ${pq.dequeue()}`);
-// // console.log(pq);
-// // console.log(`Removing ${pq.dequeue()}`);
-// // console.log(pq);
-// // console.log(`Removing ${pq.dequeue()}`);
-// // console.log(pq);
-// // console.log(`Removing ${pq.dequeue()}`);
-// // console.log(pq);
-
-// console.log(`\n\n has ${pq.has('a')}`);
-// console.log(`\n\n decreasePriority ${pq.decreasePriorityByOne('a')}`);
+// console.log(`Adding ${pq.enqueue('a', 7)}`);
+// console.log(pq);
+// console.log(`Adding ${pq.enqueue('b', 1)}`);
+// console.log(pq);
+// console.log(`Adding ${pq.enqueue('c', 1)}`);
+// console.log(pq);
+// console.log(`Adding ${pq.enqueue('d', 2)}`);
 // console.log(pq);
 
+// // // console.log(`\n\nRemoving ${pq.dequeue()}`);
+// // // console.log(pq);
+// // // console.log(`Removing ${pq.dequeue()}`);
+// // // console.log(pq);
+// // // console.log(`Removing ${pq.dequeue()}`);
+// // // console.log(pq);
+// // // console.log(`Removing ${pq.dequeue()}`);
+// // // console.log(pq);
+
+// // console.log(`\n\n has ${pq.has('a')}`);
+// // console.log(`\n\n decreasePriority ${pq.decreasePriorityByOne('a')}`);
+// // console.log(pq);
+
+// console.log('\n');
+// while(pq.length>0){
+//   console.log(pq.fetchMaxAndDecreasePriorityByOne());
+//   // console.log(pq);
+// }
