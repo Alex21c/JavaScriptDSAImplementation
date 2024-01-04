@@ -1,5 +1,3 @@
-
-
 ////// IMPLEMENTED PRIORITY QUEUE /////
 class Node{
   constructor(value, priority){
@@ -99,7 +97,7 @@ class priorityQueue{
         this.values[0] = end;
         this.sinkDown();
       }
-      return `'${max.value}'`;
+      return max;
   }
   // helper function of dequque, after removing max element which is parent of pq, make new root parent
     sinkDown(){
@@ -145,25 +143,26 @@ class priorityQueue{
     }
 }
 
-// let pq = new priorityQueue();
+let pq = new priorityQueue();
 
-// console.log(`Adding ${pq.enqueue('a', 7)}`);
-// console.log(pq);
-// console.log(`Adding ${pq.enqueue('b', 1)}`);
-// console.log(pq);
-// console.log(`Adding ${pq.enqueue('c', 1)}`);
-// console.log(pq);
-// console.log(`Adding ${pq.enqueue('d', 2)}`);
-// console.log(pq);
+console.log(`Adding ${pq.enqueue('a', 7)}`);
+console.log(pq);
+console.log(`Adding ${pq.enqueue('b', 1)}`);
+console.log(pq);
+console.log(`Adding ${pq.enqueue('c', 1)}`);
+console.log(pq);
+console.log(`Adding ${pq.enqueue('d', 2)}`);
+console.log(pq);
 
-// // // console.log(`\n\nRemoving ${pq.dequeue()}`);
-// // // console.log(pq);
-// // // console.log(`Removing ${pq.dequeue()}`);
-// // // console.log(pq);
-// // // console.log(`Removing ${pq.dequeue()}`);
-// // // console.log(pq);
-// // // console.log(`Removing ${pq.dequeue()}`);
-// // // console.log(pq);
+let removed = pq.dequeue();
+console.log(`\n\nRemoving ${removed.priority}`);
+console.log(pq);
+console.log(`Removing ${pq.dequeue()}`);
+console.log(pq);
+console.log(`Removing ${pq.dequeue()}`);
+console.log(pq);
+console.log(`Removing ${pq.dequeue()}`);
+console.log(pq);
 
 // // console.log(`\n\n has ${pq.has('a')}`);
 // // console.log(`\n\n decreasePriority ${pq.decreasePriorityByOne('a')}`);
