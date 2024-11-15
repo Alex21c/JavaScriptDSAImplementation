@@ -1,147 +1,130 @@
-////// IMPLEMENTED PRIORITY QUEUE /////
-class Node{
-  constructor(value, priority){
-    this.value=value;
+class Node {
+  constructor(value, priority) {
+    this.value = value;
     this.priority = priority;
   }
 }
+
 class priorityQueue{
-  constructor(){
+  constructor() {
     this.values = [];
     this.length = 0;
   }
-  fetchMaxAndDecreasePriorityByOne(){
-    if(this.length <=0 ){
-      console.log('this.length < = 0');
-      return;
+
+  // Fetch the maximum value and decrease its priority by 1
+  fetchMaxAndDecreasePriorityByOne() {
+    if (this.length <= 0) {
+      console.log('Queue is empty');
+      return null;
     }
-    let node = this.values[0];
-    let value = node.value;
+    const node = this.values[0];
+    const value = node.value;
     this.decreasePriorityByOne(value);
     return value;
-    
-    
   }
 
-  // decrease priority by One
-  decreasePriorityByOne(value){
-    if(this.values.length > 0){
-      let idx = 0;
-      for(let node of this.values){
-        if(node.value === value){
-          let newPriority = node.priority-1;
-          let value = node.value;
-          // removing node
-            this.dequeue(node.value);
-          // adding node
-            if(newPriority>0){
-              this.enqueue(value, newPriority);
-            }
-          return newPriority;
-        }
-        ++idx;
-      }
+  // Decrease the priority of a specific value by 1
+  decreasePriorityByOne(value) {
+    const idx = this.values.findIndex(node => node.value === value);
+    if (idx === -1) {
+      console.log(`Value ${value} not found in the queue.`);
+      return null;
+    }
+
+    this.values[idx].priority -= 1;
+    if (this.values[idx].priority <= 0) {
+      this.dequeue(); // Remove the node if its priority is 0 or less
+    } else {
+      this.bubbleUp(idx);
+      this.sinkDown(idx);
     }
   }
 
-  // Check whether an element is present in PQ or not
-  has(value){
-    if(this.values.length > 0){
-      for(let node of this.values){
-        if(node.value === value){
-          return true;
-        }
-      }
-    }
-    // Default is
-      return false;
+  // Check if the queue contains a value
+  has(value) {
+    return this.values.some(node => node.value === value);
   }
-  // Add new element
-  enqueue(value, priority){
-    let newNode = new Node(value, priority);
-    this.length++;
+
+  // Add a new element
+  enqueue(value, priority) {
+    const newNode = new Node(value, priority);
     this.values.push(newNode);
-    this.bubbleUp();    
-    return `${value}=> ${priority}`;
+    this.length++;
+    this.bubbleUp();
+    return `${value} => ${priority}`;
   }
-  // helper function of enqueue, moves the newly added element to its correct position from last index
-    bubbleUp(customIdx=null){
-      let idx;
-      if(customIdx === null){
-        idx= this.values.length-1;
-      }else{
-        idx= customIdx;
-      } 
-      let element = this.values.at(idx);    
-      while(idx>0){
-        let parentIdx = Math.floor((idx-1)/2);
-        let parent  = this.values.at(parentIdx);
-        if(element.priority > parent.priority){
-          this.values[parentIdx] = element;
-          this.values[idx] = parent;
-        }else{
-          break;
-        }
 
-        idx=parentIdx;
-      }
+  // Move the newly added element to its correct position
+  bubbleUp(customIdx = null) {
+    let idx = customIdx !== null ? customIdx : this.values.length - 1;
+    const element = this.values[idx];
+    while (idx > 0) {
+      const parentIdx = Math.floor((idx - 1) / 2);
+      const parent = this.values[parentIdx];
+      if (element.priority <= parent.priority) break;
+      // Swap parent and child
+      this.values[parentIdx] = element;
+      this.values[idx] = parent;
+      idx = parentIdx;
     }
-  // Remove Element from PQ
-  dequeue(){ // also called remove
-    // removing from heap
-      let max = this.values[0];
-      let end = this.values.pop();      
-      this.length--;
-      // have the new root sinkDown to the correct spot
-      if(this.values.length > 0){
-        this.values[0] = end;
-        this.sinkDown();
-      }
-      return max;
   }
-  // helper function of dequque, after removing max element which is parent of pq, make new root parent
-    sinkDown(){
-      let idxParent = 0;
-      let parent = this.values[idxParent];
-          
-      while(true){      
-        // index of left & right childs  
-          let idxLeftChild = (2 * idxParent) + 1;
-          let idxRightChild = (2 * idxParent) + 2;
-          let swapIdx = null;
-        
-        // swapping parent with largest child
-          let leftChild=null;
-          if(idxLeftChild < this.values.length){
-            leftChild = this.values.at(idxLeftChild);
-            
-          }
-          let rightChild=null;
-          if(idxRightChild < this.values.length){          
-            rightChild= this.values.at(idxRightChild);          
-          } 
-          // Safeguard       
-            if(leftChild === null && rightChild === null){
-              return; // out of bound
-            }
-          // console.log(`parent: ${parent}, leftChild: ${leftChild}, rightChild: ${rightChild}`);
-          if(rightChild === null){
-            swapIdx = idxLeftChild;
-          }else if(leftChild.priority > parent.priority && leftChild.priority >= rightChild.priority){
-            swapIdx = idxLeftChild;
-          }else if(rightChild.priority > parent.priority && rightChild.priority >= leftChild.priority){
-            swapIdx = idxRightChild;
-          }
-          // Safeguard
-            if(swapIdx === null){
-              return;
-            }
-          // swap
-            [this.values[swapIdx], this.values[idxParent]] = [this.values[idxParent], this.values[swapIdx]];
-            idxParent = swapIdx;
-      }
+
+  // Remove the maximum element (highest priority)
+  dequeue() {
+    if (this.length === 0) {
+      console.log("Queue is empty");
+      return null;
     }
+
+    const max = this.values[0];
+    const end = this.values.pop();
+    this.length--;
+    if (this.values.length > 0) {
+      this.values[0] = end;
+      this.sinkDown();
+    }
+    return max;
+  }
+
+  // Move the root element to its correct position
+  sinkDown(startIdx = 0) {
+    let idx = startIdx;
+    const length = this.values.length;
+    const element = this.values[idx];
+
+    while (true) {
+      const leftIdx = 2 * idx + 1;
+      const rightIdx = 2 * idx + 2;
+      let leftChild, rightChild;
+      let swap = null;
+
+      if (leftIdx < length) {
+        leftChild = this.values[leftIdx];
+        if (leftChild.priority > element.priority) {
+          swap = leftIdx;
+        }
+      }
+
+      if (rightIdx < length) {
+        rightChild = this.values[rightIdx];
+        if (
+          (swap === null && rightChild.priority > element.priority) ||
+          (swap !== null && rightChild.priority > leftChild.priority)
+        ) {
+          swap = rightIdx;
+        }
+      }
+
+      if (swap === null) break;
+
+      // Swap parent and child
+      this.values[idx] = this.values[swap];
+      this.values[swap] = element;
+      idx = swap;
+    }
+  }
 }
+
 
 let pq = new priorityQueue();
 
